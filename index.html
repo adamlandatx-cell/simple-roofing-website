@@ -1,0 +1,3222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Roofing Co | Houston's Transparent Roofer - Cost Plus Pricing</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <meta name="description" content="Houston's only Cost Plus roofer. See exactly what you pay for - materials + labor, no hidden fees. Get your free digital quote in 24 hours.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23EF1D28' width='100' height='100' rx='8'/%3E%3Ctext x='50' y='68' font-size='50' font-family='Arial Black' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+    
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES - LIGHT MODE
+           ============================================ */
+        :root {
+            --black: #231F20;
+            --black-light: #2d2a2b;
+            --black-lighter: #3a3637;
+            --red: #EF1D28;
+            --red-dark: #c9151e;
+            --red-glow: rgba(239, 29, 40, 0.15);
+            --red-subtle: rgba(239, 29, 40, 0.08);
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 5rem;
+            --space-3xl: 8rem;
+            
+            --container: 1200px;
+            --radius: 4px;
+            --radius-lg: 8px;
+            
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Light mode shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .text-red {
+            color: var(--red);
+        }
+
+        .text-gray {
+            color: var(--gray-500);
+        }
+
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        section {
+            padding: var(--space-3xl) 0;
+            position: relative;
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-radius: var(--radius);
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+            box-shadow: 0 4px 20px var(--red-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(239, 29, 40, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 2px solid var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-large {
+            padding: var(--space-md) var(--space-xl);
+            font-size: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ============================================
+           HEADER / NAVIGATION
+           ============================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-md) 0;
+            transition: all var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: var(--space-sm) 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo-tagline {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-500);
+            border-left: 1px solid var(--gray-300);
+            padding-left: var(--space-md);
+            line-height: 1.3;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .header.scrolled .logo {
+            height: 40px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            padding: var(--space-xs) 0;
+            color: var(--black);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-phone {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            letter-spacing: 0.02em;
+            color: var(--black);
+        }
+
+        .nav-phone svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--red);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding: var(--space-xs);
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--black);
+            transition: all var(--transition);
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            overflow-x: hidden;
+            background: linear-gradient(180deg, var(--gray-50) 0%, var(--white) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -20%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, var(--red) 50%, transparent 100%);
+            opacity: 0.03;
+            transform: skewX(-15deg);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: var(--space-3xl);
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: var(--space-md);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--white);
+            border: 1px solid var(--red);
+            padding: 0.6rem var(--space-md);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+            color: var(--red);
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            margin-bottom: var(--space-md);
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero-slogan {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--gray-500);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 500px;
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: var(--space-xs);
+        }
+
+        /* Hero Form */
+        .hero-form {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            position: relative;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-form::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: var(--space-lg);
+            right: var(--space-lg);
+            height: 3px;
+            background: var(--red);
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .form-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: var(--space-xs);
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .form-subtitle {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-xs);
+            color: var(--gray-700);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            color: var(--gray-800);
+            font-size: 1rem;
+            transition: all var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px var(--red-glow);
+            background: var(--white);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .form-btn {
+            width: 100%;
+            margin-top: var(--space-sm);
+        }
+
+        .form-disclaimer {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            text-align: center;
+            margin-top: var(--space-md);
+        }
+
+        /* ============================================
+           PROBLEM SECTION
+           ============================================ */
+        .problem {
+            background: var(--gray-50);
+            position: relative;
+        }
+
+        .problem::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gray-200), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto var(--space-2xl);
+        }
+
+        .section-label {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--red);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-header p {
+            color: var(--gray-500);
+            font-size: 1.1rem;
+            margin-top: var(--space-md);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .problem-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+
+        .problem-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-lg);
+            background: var(--white);
+            border: 2px solid var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .problem-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--red);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .problem-card h3 {
+            margin-bottom: var(--space-sm);
+            font-size: 1.5rem;
+        }
+
+        .problem-card p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           COST PLUS SECTION
+           ============================================ */
+        .costplus {
+            position: relative;
+            background: var(--white);
+        }
+
+        .costplus-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            align-items: center;
+        }
+
+        .costplus-content h2 {
+            margin-bottom: var(--space-md);
+        }
+
+        .costplus-content > p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            margin-bottom: var(--space-lg);
+            line-height: 1.8;
+        }
+
+        .costplus-list {
+            list-style: none;
+        }
+
+        .costplus-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .costplus-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .check-icon svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--white);
+            stroke-width: 3;
+            fill: none;
+        }
+
+        .costplus-list strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            color: var(--black);
+        }
+
+        .costplus-list span {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+
+        /* Price Breakdown Visual */
+        .price-breakdown-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-breakdown {
+            background: var(--black);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            position: relative;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .price-breakdown::before {
+            content: 'SAMPLE QUOTE';
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-xl);
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            letter-spacing: 0.15em;
+        }
+
+        .breakdown-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--red);
+            color: var(--white);
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-lg) 0;
+            border-bottom: 1px dashed var(--gray-700);
+        }
+
+        .breakdown-item:last-of-type {
+            border-bottom: 1px dashed var(--gray-700);
+        }
+
+        .breakdown-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .breakdown-label .icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breakdown-label .icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--gray-400);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .breakdown-label span {
+            font-size: 1rem;
+            color: var(--gray-300);
+        }
+
+        .breakdown-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .breakdown-fee .breakdown-value {
+            color: var(--red);
+        }
+
+        .breakdown-total {
+            background: rgba(255,255,255,0.03);
+            margin: var(--space-xl) calc(var(--space-xl) * -1) calc(var(--space-xl) * -1);
+            padding: var(--space-xl);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--red);
+        }
+
+        .breakdown-total .label {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--gray-400);
+        }
+
+        .breakdown-total .value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--red);
+        }
+
+        .receipt-note {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-top: var(--space-lg);
+            padding: var(--space-md);
+            background: var(--red-subtle);
+            border: 1px solid var(--red);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            color: var(--gray-700);
+        }
+
+        .receipt-note svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--red);
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           HOW IT WORKS SECTION
+           ============================================ */
+        .process {
+            background: var(--gray-50);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            position: relative;
+        }
+
+        .process-grid::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--red), var(--red), var(--red));
+            z-index: 0;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto var(--space-lg);
+            background: var(--white);
+            border: 3px solid var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--red);
+            position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 1px solid var(--gray-200);
+            border-radius: 50%;
+        }
+
+        .process-step h3 {
+            margin-bottom: var(--space-sm);
+        }
+
+        .process-step p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .process-badge {
+            display: inline-block;
+            background: var(--red);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 12px;
+            border-radius: 50px;
+            margin-top: var(--space-md);
+        }
+
+        /* ============================================
+           SERVICES SECTION
+           ============================================ */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .service-card {
+            display: flex;
+            gap: var(--space-lg);
+            padding: var(--space-xl);
+            align-items: flex-start;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--red);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .service-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .service-content h3 {
+            margin-bottom: var(--space-xs);
+            font-size: 1.5rem;
+        }
+
+        .service-content p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           TRUST / TESTIMONIALS SECTION
+           ============================================ */
+        .trust {
+            background: var(--gray-50);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: var(--space-3xl);
+            align-items: center;
+        }
+
+        .trust-stats {
+            text-align: center;
+        }
+
+        .google-rating {
+            margin-bottom: var(--space-lg);
+        }
+
+        .rating-value {
+            font-family: var(--font-display);
+            font-size: 6rem;
+            line-height: 1;
+            color: var(--black);
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin: var(--space-sm) 0;
+        }
+
+        .rating-stars svg {
+            width: 32px;
+            height: 32px;
+            fill: #FBBC04;
+        }
+
+        .rating-label {
+            font-size: 1rem;
+            color: var(--gray-500);
+        }
+
+        .rating-label strong {
+            color: var(--black);
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .trust-badge-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .trust-badge-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--red);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .trust-badge span {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            gap: var(--space-lg);
+        }
+
+        .testimonial {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-family: var(--font-display);
+            font-size: 4rem;
+            color: var(--red);
+            opacity: 0.3;
+            position: absolute;
+            top: var(--space-sm);
+            left: var(--space-md);
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-xl);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding-left: var(--space-xl);
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--white);
+        }
+
+        .author-info strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--black);
+        }
+
+        .author-info span {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        /* ============================================
+           SERVICE AREA SECTION
+           ============================================ */
+        .area-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            align-items: center;
+        }
+
+        .area-content h2 {
+            margin-bottom: var(--space-md);
+        }
+
+        .area-content > p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            margin-bottom: var(--space-xl);
+            line-height: 1.8;
+        }
+
+        .area-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm) var(--space-lg);
+            list-style: none;
+        }
+
+        .area-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 1rem;
+            color: var(--gray-700);
+        }
+
+        .area-list li::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+
+        .area-visual {
+            position: relative;
+        }
+
+        .area-map {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .area-map-container {
+            height: 400px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .area-map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(255,255,255,0.95));
+            padding: var(--space-md);
+            text-align: center;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .area-map-overlay h3,
+        .area-map-overlay p,
+        .area-map-overlay .area-radius {
+            pointer-events: auto;
+        }
+
+        .area-map-overlay h3 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+            color: var(--black);
+        }
+
+        .area-map-overlay p {
+            color: var(--gray-500);
+            margin-bottom: var(--space-xs);
+            font-size: 0.8rem;
+        }
+
+        .area-radius {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--white);
+            border: 1px solid var(--red);
+            padding: 6px 12px;
+            border-radius: var(--radius);
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--red);
+        }
+
+        .area-radius svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Custom map marker styles */
+        .custom-marker {
+            background: var(--red);
+            border: 3px solid var(--white);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            font-family: var(--font-body);
+        }
+
+        .leaflet-popup-content {
+            margin: 12px 16px;
+            font-size: 14px;
+        }
+
+        .leaflet-popup-content strong {
+            font-family: var(--font-display);
+            font-size: 16px;
+            color: var(--black);
+        }
+
+        /* ============================================
+           GALLERY SECTION
+           ============================================ */
+        .gallery {
+            background: var(--gray-50);
+        }
+
+        .gallery-intro {
+            max-width: 700px;
+            margin: 0 auto var(--space-xl);
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--gray-600);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .gallery-item {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: var(--white);
+        }
+
+        .gallery-image-wrapper {
+            position: relative;
+        }
+
+        .gallery-image {
+            width: 100%;
+            aspect-ratio: 1920 / 780;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-labels {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .gallery-labels span {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .gallery-labels .before {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .gallery-labels .after {
+            background: rgba(239, 29, 40, 0.85);
+        }
+
+        .gallery-caption {
+            padding: var(--space-md);
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--black);
+            background: var(--white);
+            border-top: 3px solid var(--red);
+        }
+
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================
+           ENHANCED TESTIMONIALS SECTION
+           ============================================ */
+        .testimonials-section {
+            background: var(--white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .testimonial-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            position: relative;
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: var(--space-md);
+        }
+
+        .testimonial-stars svg {
+            width: 20px;
+            height: 20px;
+            fill: #FFC107;
+            stroke: none;
+        }
+
+        .testimonial-card blockquote {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray-700);
+            margin-bottom: var(--space-lg);
+            font-style: italic;
+        }
+
+        .testimonial-card blockquote::before {
+            content: '"';
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--red);
+            opacity: 0.3;
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-lg);
+            line-height: 1;
+        }
+
+        .testimonial-author-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .testimonial-author-card .avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--red);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author-card .name {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .testimonial-author-card .location {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        @media (max-width: 900px) {
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================
+           COMPARISON SECTION
+           ============================================ */
+        .comparison {
+            background: var(--gray-50);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .comparison-column {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .comparison-column.traditional {
+            border-top: 4px solid var(--gray-400);
+        }
+
+        .comparison-column.simple {
+            border-top: 4px solid var(--red);
+        }
+
+        .comparison-column h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .comparison-column.traditional h3 {
+            color: var(--gray-500);
+        }
+
+        .comparison-column.simple h3 {
+            color: var(--red);
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
+            font-size: 0.95rem;
+            color: var(--gray-700);
+        }
+
+        .comparison-list li svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .comparison-column.traditional .comparison-list li svg {
+            stroke: var(--gray-400);
+        }
+
+        .comparison-column.simple .comparison-list li svg {
+            stroke: var(--red);
+        }
+
+        .comparison-tagline {
+            text-align: center;
+            margin-top: var(--space-xl);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--gray-600);
+        }
+
+        @media (max-width: 700px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================
+           FAQ SECTION
+           ============================================ */
+        .faq {
+            background: var(--white);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+            padding: var(--space-lg) 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--black);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+        }
+
+        .faq-question span {
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        .faq-answer {
+            color: var(--gray-600);
+            line-height: 1.7;
+            padding-left: calc(var(--space-sm) + 1.15rem);
+        }
+
+        /* ============================================
+           LOCAL SEO TEXT
+           ============================================ */
+        .local-seo {
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            padding: var(--space-xl) 0;
+            margin-top: calc(var(--space-3xl) * -1);
+        }
+
+        .local-seo-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .local-seo h3 {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .local-seo p {
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta {
+            background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            margin-bottom: var(--space-md);
+            color: var(--white);
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto var(--space-xl);
+            color: var(--white);
+        }
+
+        .cta .btn {
+            background: var(--white);
+            color: var(--red);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta .btn:hover {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+        }
+
+        .cta-phone {
+            margin-top: var(--space-lg);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .cta-phone a {
+            color: var(--white);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            transition: border-color var(--transition);
+        }
+
+        .cta-phone a:hover {
+            border-color: var(--white);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--black);
+            padding: var(--space-2xl) 0 var(--space-lg);
+            border-top: 1px solid var(--black-lighter);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: var(--space-2xl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 1px solid var(--black-lighter);
+            margin-bottom: var(--space-lg);
+        }
+
+        .footer-brand p {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-top: var(--space-md);
+            max-width: 300px;
+        }
+
+        .footer-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-md);
+            color: var(--gray-300);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--red);
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-contact svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--red);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .footer-contact a {
+            color: var(--white);
+            transition: color var(--transition);
+        }
+
+        .footer-contact a:hover {
+            color: var(--red);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-500);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: var(--space-lg);
+        }
+
+        .footer-legal a {
+            color: var(--gray-500);
+            transition: color var(--transition);
+        }
+
+        .footer-legal a:hover {
+            color: var(--white);
+        }
+
+        /* ============================================
+           MANIFESTO SECTIONS
+           ============================================ */
+        .manifesto {
+            padding: var(--space-2xl) 0;
+            position: relative;
+            background: var(--white);
+        }
+
+        .manifesto-centered {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .manifesto h2 {
+            margin-bottom: var(--space-lg);
+        }
+
+        .manifesto p {
+            color: var(--gray-600);
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: var(--space-md);
+        }
+
+        .manifesto p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .manifesto-dark {
+            background: var(--gray-50);
+        }
+
+        .manifesto-accent {
+            border-left: 4px solid var(--red);
+            padding-left: var(--space-lg);
+            text-align: left;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .manifesto-accent p {
+            font-size: 1.25rem;
+            color: var(--gray-700);
+        }
+
+        .fit-list {
+            list-style: none;
+            text-align: left;
+            max-width: 500px;
+            margin: var(--space-xl) auto;
+        }
+
+        .fit-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-sm) 0;
+            font-size: 1.1rem;
+            color: var(--gray-700);
+        }
+
+        .fit-list li::before {
+            content: '✓';
+            color: var(--red);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .manifesto-signature {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .manifesto-signature p {
+            font-style: italic;
+            color: var(--gray-500);
+        }
+
+        .not-for-you {
+            color: var(--gray-500) !important;
+            font-size: 1rem !important;
+            margin-top: var(--space-lg);
+        }
+
+        /* ============================================
+           ANIMATED STATS SECTION
+           ============================================ */
+        .stats-section {
+            padding: var(--space-2xl) 0;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--red-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, var(--red-glow) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: var(--space-xl) var(--space-md);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            color: var(--red);
+            line-height: 1;
+            margin-bottom: var(--space-sm);
+        }
+
+        .stat-number .stat-suffix {
+            font-size: 0.6em;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.95rem;
+            color: var(--gray-500);
+            line-height: 1.4;
+            max-width: 180px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.1s; }
+        .fade-in-delay-2 { transition-delay: 0.2s; }
+        .fade-in-delay-3 { transition-delay: 0.3s; }
+        .fade-in-delay-4 { transition-delay: 0.4s; }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+
+            .hero-form {
+                max-width: 500px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .costplus-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+
+            .process-grid::before {
+                display: none;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+                gap: var(--space-2xl);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+
+            .area-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-xl);
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --space-3xl: 5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-phone {
+                display: none;
+            }
+
+            .logo-tagline {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: var(--space-lg);
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .area-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: var(--space-md);
+                text-align: center;
+            }
+
+            .footer-legal {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step-number {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .rating-value {
+                font-size: 4rem;
+            }
+
+            .trust-badges {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-close svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--black);
+            stroke-width: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="#" class="logo-link">
+                <svg class="logo" viewBox="0 0 442.75 201.32" xmlns="http://www.w3.org/2000/svg">
+                    <style>.hdr0{fill:#231F20}.hdr1{fill:#EF1D28}</style>
+                    <g>
+                        <rect y="110.02" class="hdr0" width="14.81" height="0.22"/>
+                        <path class="hdr0" d="M442.75,0v201.32H0v-76.27h14.81v61.46h413.13V14.81H14.81v80.4H74.7c2.32,0,4.3-0.72,5.94-2.15c1.65-1.43,2.47-3.2,2.47-5.31v-0.9c0-2.04-0.82-3.79-2.47-5.26c-1.64-1.47-3.62-2.2-5.94-2.2H56.86c-3.37,0-6.53-0.58-9.48-1.73c-2.96-1.16-5.54-2.75-7.74-4.76c-2.21-2.01-3.95-4.37-5.22-7.05c-1.27-2.69-1.9-5.56-1.9-8.62c0-3.05,0.63-5.93,1.9-8.61c1.27-2.69,3.01-5.04,5.22-7.05c2.2-2.02,4.78-3.6,7.74-4.76c2.95-1.16,6.11-1.73,9.48-1.73h73.37v74.94H114.3V49.88H56.86c-2.32,0-4.3,0.72-5.95,2.14c-1.64,1.42-2.46,3.14-2.46,5.16s0.82,3.75,2.46,5.21c1.65,1.46,3.63,2.19,5.95,2.19H74.7c3.36,0,6.52,0.58,9.48,1.74c2.95,1.16,5.53,2.75,7.74,4.77c2.2,2.02,3.94,4.37,5.22,7.07c1.27,2.69,1.9,5.57,1.9,8.63v0.9c0,3.07-0.63,5.97-1.9,8.7c-1.28,2.73-3.02,5.1-5.22,7.12c-2.21,2.02-4.79,3.61-7.74,4.77c-2.96,1.16-6.12,1.74-9.48,1.74H0V0H442.75z"/>
+                        <path class="hdr0" d="M216.28,35.19v74.83h-15.93V68.51l-18.74,36.69l-20.19-38.03v42.86h-15.93V35.19h17.05l18.74,35.34l18.06-35.34H216.28z"/>
+                        <path class="hdr0" d="M273.77,37.32c3.33,1.42,6.23,3.33,8.69,5.72c2.47,2.39,4.43,5.2,5.89,8.41c1.46,3.22,2.19,6.66,2.19,10.32c0,3.67-0.73,7.11-2.19,10.32c-1.46,3.22-3.42,6.04-5.89,8.47c-2.47,2.43-5.37,4.34-8.69,5.72c-3.33,1.39-6.9,2.08-10.71,2.08h-15.59v21.76h-15.93V72.99h15.93h15.59c1.57,0,3.05-0.3,4.43-0.9c1.38-0.6,2.62-1.4,3.7-2.41c1.08-1.01,1.92-2.19,2.52-3.53c0.6-1.35,0.9-2.8,0.9-4.38c0-1.49-0.3-2.92-0.9-4.26c-0.6-1.35-1.44-2.52-2.52-3.53c-1.09-1.01-2.32-1.81-3.7-2.41c-1.39-0.6-2.86-0.9-4.43-0.9h-15.59v16.04h-15.93V35.19h31.52C266.87,35.19,270.44,35.9,273.77,37.32z"/>
+                        <path class="hdr0" d="M305.8,35.19v52.39h15.93V35.19H305.8z"/>
+                        <polygon class="hdr0" points="410.23,95.32 410.23,110.13 359.64,110.13 359.64,110.02 305.8,110.02 305.8,95.32"/>
+                        <path class="hdr0" d="M410.23,50.22V35.41h-50.59v53.96h15.93v-7.74h34.66V66.82h-34.66v-16.6H410.23z"/>
+                        <path class="hdr1" d="M65.97,138.5c0,3.01-0.81,5.71-2.42,8.11c-1.61,2.4-3.73,4.21-6.36,5.44l7.95,13.8H54.77l-7.06-12.27h-6.17v12.34h-9.03v-21.05h9.03h8.84c0.89,0,1.73-0.17,2.51-0.51c0.78-0.34,1.48-0.8,2.1-1.37c0.61-0.57,1.09-1.24,1.43-2c0.34-0.76,0.51-1.59,0.51-2.48c0-0.85-0.17-1.65-0.51-2.42c-0.34-0.76-0.82-1.43-1.43-2c-0.61-0.57-1.31-1.03-2.1-1.37c-0.78-0.34-1.62-0.51-2.51-0.51h-8.84v9.09h-9.03v-17.87h17.87c2.16,0,4.19,0.4,6.07,1.21c1.89,0.81,3.53,1.89,4.93,3.24c1.4,1.36,2.51,2.95,3.34,4.77C65.55,134.47,65.97,136.42,65.97,138.5z"/>
+                        <path class="hdr1" d="M106.8,127.88c1.91,1.78,3.34,3.81,4.32,6.07c0.97,2.27,1.46,4.65,1.46,7.15v7.31c0,2.54-0.49,4.95-1.46,7.22c-0.97,2.27-2.41,4.29-4.32,6.07c-1.86,1.78-3.98,3.14-6.35,4.07s-4.87,1.4-7.49,1.4c-2.67,0-5.18-0.47-7.52-1.4c-2.35-0.93-4.48-2.29-6.38-4.07c-1.86-1.78-3.28-3.8-4.26-6.07c-0.97-2.27-1.46-4.67-1.46-7.22v-7.31c0-2.5,0.49-4.89,1.46-7.15c0.97-2.27,2.39-4.29,4.26-6.07c1.9-1.78,4.03-3.14,6.38-4.07c2.35-0.93,4.86-1.4,7.52-1.4c2.62,0,5.12,0.47,7.49,1.4C102.82,124.74,104.94,126.1,106.8,127.88z M103.55,141.11c0-1.4-0.28-2.7-0.83-3.91c-0.55-1.21-1.3-2.27-2.26-3.18c-0.95-0.91-2.08-1.63-3.37-2.16c-1.29-0.53-2.66-0.79-4.1-0.79c-1.48,0-2.86,0.27-4.13,0.79c-1.27,0.53-2.4,1.25-3.37,2.16c-0.98,0.91-1.74,1.97-2.29,3.18c-0.55,1.21-0.83,2.51-0.83,3.91v7.31c0,1.4,0.28,2.71,0.83,3.94c0.55,1.23,1.31,2.3,2.29,3.21c0.97,0.91,2.1,1.63,3.37,2.16c1.27,0.53,2.65,0.8,4.13,0.8c1.44,0,2.81-0.26,4.1-0.8c1.29-0.53,2.42-1.25,3.37-2.16c0.95-0.91,1.71-1.98,2.26-3.21c0.55-1.23,0.83-2.54,0.83-3.94V141.11z"/>
+                        <path class="hdr1" d="M154.69,127.88c1.91,1.78,3.34,3.81,4.32,6.07c0.97,2.27,1.46,4.65,1.46,7.15v7.31c0,2.54-0.49,4.95-1.46,7.22c-0.97,2.27-2.41,4.29-4.32,6.07c-1.86,1.78-3.98,3.14-6.35,4.07s-4.87,1.4-7.49,1.4c-2.67,0-5.18-0.47-7.52-1.4c-2.35-0.93-4.48-2.29-6.38-4.07c-1.86-1.78-3.28-3.8-4.25-6.07c-0.97-2.27-1.46-4.67-1.46-7.22v-7.31c0-2.5,0.49-4.89,1.46-7.15c0.97-2.27,2.39-4.29,4.25-6.07c1.9-1.78,4.03-3.14,6.38-4.07c2.35-0.93,4.86-1.4,7.52-1.4c2.62,0,5.12,0.47,7.49,1.4C150.71,124.74,152.83,126.1,154.69,127.88z M151.44,141.11c0-1.4-0.28-2.7-0.83-3.91c-0.55-1.21-1.3-2.27-2.26-3.18c-0.95-0.91-2.08-1.63-3.37-2.16c-1.29-0.53-2.66-0.79-4.1-0.79c-1.48,0-2.86,0.27-4.13,0.79c-1.27,0.53-2.4,1.25-3.37,2.16c-0.98,0.91-1.74,1.97-2.29,3.18c-0.55,1.21-0.83,2.51-0.83,3.91v7.31c0,1.4,0.28,2.71,0.83,3.94c0.55,1.23,1.31,2.3,2.29,3.21c0.97,0.91,2.1,1.63,3.37,2.16c1.27,0.53,2.65,0.8,4.13,0.8c1.44,0,2.81-0.26,4.1-0.8c1.29-0.53,2.42-1.25,3.37-2.16c0.95-0.91,1.71-1.98,2.26-3.21c0.55-1.23,0.83-2.54,0.83-3.94V141.11z"/>
+                        <polygon class="hdr1" points="210.96,123.43 210.96,131.82 178.15,131.82 178.15,137.86 169.12,137.86 169.12,123.43"/>
+                        <polygon class="hdr1" points="197.8,141.36 197.8,149.75 178.15,149.75 178.15,165.84 169.12,165.84 169.12,141.36"/>
+                        <path class="hdr1" d="M206.45,165.84v-42.42h9.03v42.42H206.45z"/>
+                        <path class="hdr1" d="M257.64,123.43v42.42h-9.51l-14.97-25.69v25.69h-9.03v-42.42h9.79l14.69,25.18v-25.18H257.64z"/>
+                        <path class="hdr1" d="M295.73,151.79h9.03v14.12h-15.62c-3.05,0-5.97-0.53-8.76-1.59c-2.79-1.06-5.27-2.59-7.43-4.58c-2.16-2.04-3.81-4.33-4.95-6.9c-1.14-2.56-1.71-5.27-1.71-8.11c0-2.84,0.57-5.54,1.72-8.11c1.14-2.56,2.8-4.84,4.96-6.84c2.16-2.03,4.64-3.58,7.44-4.64c2.8-1.06,5.72-1.59,8.78-1.59h11.07v8.39h-11.07c-1.91,0-3.7,0.34-5.37,1.02c-1.68,0.68-3.15,1.59-4.42,2.73c-1.27,1.14-2.27,2.49-2.99,4.04c-0.72,1.55-1.08,3.21-1.08,4.99c0,1.78,0.36,3.44,1.08,4.99c0.72,1.55,1.72,2.89,2.99,4.04c1.27,1.14,2.74,2.06,4.42,2.73c1.67,0.68,3.47,1.02,5.37,1.02h6.55V151.79z M304.76,140.02v8.39h-19.27v-8.39H304.76z"/>
+                        <path class="hdr1" d="M349.44,132.97c-1.68,0.68-3.15,1.59-4.42,2.73c-1.27,1.14-2.27,2.49-2.99,4.04c-0.72,1.55-1.08,3.21-1.08,4.99c0,1.78,0.36,3.44,1.08,4.99c0.72,1.55,1.72,2.89,2.99,4.04c1.27,1.14,2.74,2.06,4.42,2.73c1.67,0.68,3.47,1.02,5.37,1.02h11.07v8.39h-11.07c-3.05,0-5.98-0.53-8.78-1.59c-2.8-1.06-5.28-2.59-7.44-4.58c-2.16-2.04-3.82-4.33-4.96-6.9c-1.14-2.56-1.72-5.27-1.72-8.11c0-2.84,0.57-5.54,1.72-8.11c1.14-2.56,2.8-4.84,4.96-6.84c2.16-2.03,4.64-3.58,7.44-4.64c2.8-1.06,5.72-1.59,8.78-1.59h11.07v8.39h-11.07C352.91,131.95,351.12,132.29,349.44,132.97z"/>
+                        <path class="hdr1" d="M404.46,127.88c1.91,1.78,3.34,3.81,4.32,6.07c0.97,2.27,1.46,4.65,1.46,7.15v7.31c0,2.54-0.49,4.95-1.46,7.22c-0.97,2.27-2.41,4.29-4.32,6.07c-1.86,1.78-3.98,3.14-6.35,4.07s-4.87,1.4-7.49,1.4c-2.67,0-5.18-0.47-7.52-1.4c-2.35-0.93-4.48-2.29-6.38-4.07c-1.86-1.78-3.28-3.8-4.26-6.07c-0.97-2.27-1.46-4.67-1.46-7.22v-7.31c0-2.5,0.49-4.89,1.46-7.15c0.97-2.27,2.39-4.29,4.26-6.07c1.9-1.78,4.03-3.14,6.38-4.07c2.35-0.93,4.86-1.4,7.52-1.4c2.62,0,5.12,0.47,7.49,1.4C400.48,124.74,402.59,126.1,404.46,127.88z M401.2,141.11c0-1.4-0.28-2.7-0.83-3.91c-0.55-1.21-1.3-2.27-2.26-3.18c-0.95-0.91-2.08-1.63-3.37-2.16c-1.29-0.53-2.66-0.79-4.1-0.79c-1.48,0-2.86,0.27-4.13,0.79c-1.27,0.53-2.4,1.25-3.37,2.16c-0.98,0.91-1.74,1.97-2.29,3.18c-0.55,1.21-0.83,2.51-0.83,3.91v7.31c0,1.4,0.28,2.71,0.83,3.94c0.55,1.23,1.31,2.3,2.29,3.21c0.97,0.91,2.1,1.63,3.37,2.16c1.27,0.53,2.65,0.8,4.13,0.8c1.44,0,2.81-0.26,4.1-0.8c1.29-0.53,2.42-1.25,3.37-2.16c0.95-0.91,1.71-1.98,2.26-3.21c0.55-1.23,0.83-2.54,0.83-3.94V141.11z"/>
+                    </g>
+                </svg>
+                <span class="logo-tagline">Texas's Most Transparent Roofer</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#areas">Areas</a></li>
+                </ul>
+                <a href="tel:+17135551234" class="nav-phone">
+                    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    (713) 555-1234
+                </a>
+            </nav>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#services">Services</a>
+        <a href="#areas">Areas</a>
+        <a href="tel:+17135551234" class="text-red">(713) 555-1234</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">Houston's Only Cost Plus Roofer</div>
+                    <h1>
+                        <span>No Hidden Fees.</span>
+                        <span>No Salesmen.</span>
+                        <span class="text-red">Just Roofing.</span>
+                    </h1>
+                    <p class="hero-slogan">See Every Dollar. Trust Every Nail.</p>
+                    <p class="hero-subtitle">
+                        We show you the exact cost of materials and labor. You see every receipt. 
+                        That's it. No markup mystery, no pressure tactics, no surprise charges.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#quote" class="btn btn-primary btn-large">Get Your Free Quote</a>
+                        <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-value">24hr</div>
+                            <div class="stat-label">Quote Turnaround</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Digital Process</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">$0</div>
+                            <div class="stat-label">Hidden Fees</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-form" id="quote">
+                    <div class="form-title">Get Your Free Quote</div>
+                    <p class="form-subtitle">No visit required. We'll send your quote within 24 hours.</p>
+                    <form id="quoteForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="John Smith" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="john@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="(713) 555-1234" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="address">Property Address</label>
+                            <input type="text" id="address" name="address" class="form-input" placeholder="123 Main St, Houston, TX" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="service">Service Needed</label>
+                            <select id="service" name="service" class="form-input" required>
+                                <option value="">Select a service...</option>
+                                <option value="replacement">Roof Replacement</option>
+                                <option value="repair">Roof Repair</option>
+                                <option value="storm">Storm Damage</option>
+                                <option value="inspection">Inspection</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary form-btn">Get My Free Quote</button>
+                        <p class="form-disclaimer">No spam. No salesmen. Just your quote.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">The Problem</div>
+                <h2>Roofing Shouldn't Feel Like a Gamble</h2>
+                <p>Traditional roofers hide their pricing because they can. We think that's wrong.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="card problem-card fade-in fade-in-delay-1">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </div>
+                    <h3>Mystery Pricing</h3>
+                    <p>You get a number. You don't know why. Is it fair? Who knows. You just have to trust them.</p>
+                </div>
+                <div class="card problem-card fade-in fade-in-delay-2">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+                    </div>
+                    <h3>Pushy Salesmen</h3>
+                    <p>High-pressure tactics, "limited time" offers, and that sinking feeling you're being played.</p>
+                </div>
+                <div class="card problem-card fade-in fade-in-delay-3">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <h3>Hidden Fees</h3>
+                    <p>"Oh, we didn't mention that? That'll be extra." Sound familiar?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cost Plus Section -->
+    <section class="costplus" id="pricing">
+        <div class="container">
+            <div class="costplus-grid">
+                <div class="costplus-content fade-in">
+                    <div class="section-label">Our Solution</div>
+                    <h2>Cost Plus Pricing</h2>
+                    <p>
+                        We show you what we pay for materials. We show you our labor costs. 
+                        Then we add a transparent fee. That's it. No hidden markups, no inflated estimates.
+                    </p>
+                    <ul class="costplus-list">
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div>
+                                <strong>See Every Receipt</strong>
+                                <span>Actual supplier invoices. Real material costs. Nothing hidden.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div>
+                                <strong>Know the Labor Rate</strong>
+                                <span>Our crew's hourly rate is fixed and published. No surprises.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div>
+                                <strong>Flat Service Fee</strong>
+                                <span>20% flat fee covers overhead and profit. That's it.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div>
+                                <strong>Final Cost Guarantee</strong>
+                                <span>If it costs us less, you pay less. Savings passed directly to you.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="price-breakdown-wrapper">
+                    <div class="price-breakdown fade-in">
+                        <div class="breakdown-title">Roof Replacement — 2,400 SQ FT</div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-label">
+                                <div class="icon">
+                                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                                </div>
+                                <span>Materials (Shingles, Underlayment, etc.)</span>
+                            </div>
+                            <div class="breakdown-value">$4,850</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-label">
+                                <div class="icon">
+                                    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                                </div>
+                                <span>Labor (Installation Crew)</span>
+                            </div>
+                            <div class="breakdown-value">$3,200</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-label">
+                                <div class="icon">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                </div>
+                                <span>Permits & Disposal</span>
+                            </div>
+                            <div class="breakdown-value">$650</div>
+                        </div>
+                        <div class="breakdown-item breakdown-fee">
+                            <div class="breakdown-label">
+                                <div class="icon">
+                                    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                </div>
+                                <span>Simple Fee (20%)</span>
+                            </div>
+                            <div class="breakdown-value text-red">$1,740</div>
+                        </div>
+                        <div class="breakdown-total">
+                            <div class="label">Your Total</div>
+                            <div class="value">$10,440</div>
+                        </div>
+                    </div>
+                    <div class="receipt-note">
+                        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>You'll receive itemized receipts for every material purchased.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">The Numbers Don't Lie</div>
+                <h2>Why Choose Simple Roofing?</h2>
+                <p>Here's what our Cost Plus 20% pricing model means for you.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card fade-in fade-in-delay-1">
+                    <div class="stat-number">
+                        <span class="stat-counter" data-target="15">0</span><span class="stat-suffix">-20%</span>
+                    </div>
+                    <div class="stat-label">Less Than Traditional Roofers</div>
+                </div>
+                <div class="stat-card fade-in fade-in-delay-2">
+                    <div class="stat-number">
+                        <span class="stat-counter" data-target="100">0</span><span class="stat-suffix">%</span>
+                    </div>
+                    <div class="stat-label">Transparent Pricing</div>
+                </div>
+                <div class="stat-card fade-in fade-in-delay-3">
+                    <div class="stat-number">
+                        <span class="stat-counter" data-target="24">0</span><span class="stat-suffix">hr</span>
+                    </div>
+                    <div class="stat-label">Quote Turnaround</div>
+                </div>
+                <div class="stat-card fade-in fade-in-delay-4">
+                    <div class="stat-number">
+                        <span class="stat-counter" data-target="0">0</span><span class="stat-suffix"></span>
+                    </div>
+                    <div class="stat-label">Hidden Fees. Ever.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="process" id="how-it-works">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">How It Works</div>
+                <h2>Three Steps. All Digital.</h2>
+                <p>No home visits. No pressure. Just fast, transparent service.</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-step fade-in fade-in-delay-1">
+                    <div class="step-number">1</div>
+                    <h3>Submit Your Address</h3>
+                    <p>Fill out our quick form. We use satellite imagery and AI to measure your roof remotely — no ladder required.</p>
+                    <span class="process-badge">Takes 2 min</span>
+                </div>
+                <div class="process-step fade-in fade-in-delay-2">
+                    <div class="step-number">2</div>
+                    <h3>Get Your Quote</h3>
+                    <p>Within 24 hours, you'll receive a detailed Cost Plus quote in your inbox. Every line item explained.</p>
+                    <span class="process-badge">Within 24 hrs</span>
+                </div>
+                <div class="process-step fade-in fade-in-delay-3">
+                    <div class="step-number">3</div>
+                    <h3>We Get to Work</h3>
+                    <p>Approve online, schedule your install, and track progress. We handle permits, materials, and cleanup.</p>
+                    <span class="process-badge">100% Digital</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- No Sales Games Section -->
+    <section class="manifesto">
+        <div class="container">
+            <div class="manifesto-accent fade-in">
+                <h2>No Sales Games</h2>
+                <p>No pressure. No fake discounts. No "today only" tricks.</p>
+                <p>We give you the real numbers. You decide.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Our Services</div>
+                <h2>Residential Roofing</h2>
+                <p>Expert craftsmanship for Houston homeowners.</p>
+            </div>
+            <div class="services-grid">
+                <div class="card service-card fade-in fade-in-delay-1">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <div class="service-content">
+                        <h3>Roof Replacement</h3>
+                        <p>Complete tear-off and installation with premium materials. Asphalt shingles, metal, and tile options available.</p>
+                    </div>
+                </div>
+                <div class="card service-card fade-in fade-in-delay-2">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    <div class="service-content">
+                        <h3>Roof Repair</h3>
+                        <p>Leaks, missing shingles, flashing issues — we fix it fast. Same transparent pricing for repairs.</p>
+                    </div>
+                </div>
+                <div class="card service-card fade-in fade-in-delay-3">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><polyline points="13 11 9 17 15 17 11 23"/></svg>
+                    </div>
+                    <div class="service-content">
+                        <h3>Storm Damage</h3>
+                        <p>Hail, wind, or hurricane damage? We work with insurance and get your roof restored quickly.</p>
+                    </div>
+                </div>
+                <div class="card service-card fade-in fade-in-delay-4">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <div class="service-content">
+                        <h3>Inspections</h3>
+                        <p>Comprehensive roof assessment with detailed report. Know exactly what's happening up there.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery section" id="gallery">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Our Work</div>
+                <h2>Real Roofs. Real Work.</h2>
+            </div>
+            <p class="gallery-intro fade-in">
+                These are real projects. No stock photos. No fake results. Just real roofs, done the right way.
+            </p>
+            <div class="gallery-grid">
+                <div class="gallery-item fade-in fade-in-delay-1">
+                    <div class="gallery-image-wrapper">
+                        <img src="images/project-1.png" alt="Roof replacement in Houston" class="gallery-image">
+                        <div class="gallery-labels">
+                            <span class="before">Before</span>
+                            <span class="after">After</span>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">Full Replacement – Houston, TX</div>
+                </div>
+                <div class="gallery-item fade-in fade-in-delay-2">
+                    <div class="gallery-image-wrapper">
+                        <img src="images/project-2.png" alt="Complete reroof in Sugar Land" class="gallery-image">
+                        <div class="gallery-labels">
+                            <span class="before">Before</span>
+                            <span class="after">After</span>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">Complete Reroof – Sugar Land, TX</div>
+                </div>
+                <div class="gallery-item fade-in fade-in-delay-3">
+                    <div class="gallery-image-wrapper">
+                        <img src="images/project-3.png" alt="Storm damage repair in Katy" class="gallery-image">
+                        <div class="gallery-labels">
+                            <span class="before">Before</span>
+                            <span class="after">After</span>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">Storm Damage Repair – Katy, TX</div>
+                </div>
+                <div class="gallery-item fade-in fade-in-delay-4">
+                    <div class="gallery-image-wrapper">
+                        <img src="images/project-4.png" alt="Shingle replacement in Pearland" class="gallery-image">
+                        <div class="gallery-labels">
+                            <span class="before">Before</span>
+                            <span class="after">After</span>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">Shingle Replacement – Pearland, TX</div>
+                </div>
+                <div class="gallery-item fade-in fade-in-delay-5">
+                    <div class="gallery-image-wrapper">
+                        <img src="images/project-5.png" alt="Full replacement in Cypress" class="gallery-image">
+                        <div class="gallery-labels">
+                            <span class="before">Before</span>
+                            <span class="after">After</span>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">Full Replacement – Cypress, TX</div>
+                </div>
+                <div class="gallery-item fade-in fade-in-delay-6">
+                    <div class="gallery-image-wrapper">
+                        <img src="images/project-6.png" alt="Shingle upgrade in The Woodlands" class="gallery-image">
+                        <div class="gallery-labels">
+                            <span class="before">Before</span>
+                            <span class="after">After</span>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">Shingle Upgrade – The Woodlands, TX</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-stats fade-in">
+                    <div class="google-rating">
+                        <div class="rating-value">4.9</div>
+                        <div class="rating-stars">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <div class="rating-label"><strong>200+</strong> Google Reviews</div>
+                    </div>
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <div class="trust-badge-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <span>Licensed</span>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="trust-badge-icon">
+                                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
+                            <span>Insured</span>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="trust-badge-icon">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                            </div>
+                            <span>Certified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonials fade-in">
+                    <div class="testimonial">
+                        <p class="testimonial-text">Finally, a roofer who doesn't treat you like a mark. They showed me exactly what I was paying for. The quote was actually $1,200 less than two other bids I got.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">M</div>
+                            <div class="author-info">
+                                <strong>Michael T.</strong>
+                                <span>Katy, TX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">No salesman at my door. No pressure. Just a detailed quote in my inbox. This is how every home service should work.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">S</div>
+                            <div class="author-info">
+                                <strong>Sarah K.</strong>
+                                <span>Sugar Land, TX</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Testimonials Section -->
+    <section class="testimonials-section section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Reviews</div>
+                <h2>Homeowners Saying It Themselves</h2>
+                <p>We don't need sales talk. Our customers explain it better.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in fade-in-delay-1">
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <blockquote>Finally, a roofer who doesn't treat you like a mark. They showed me exactly what I was paying for. The quote was actually $1,200 less than two other bids I got.</blockquote>
+                    <div class="testimonial-author-card">
+                        <div class="avatar">M</div>
+                        <div>
+                            <div class="name">Michael T.</div>
+                            <div class="location">Katy, TX</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in fade-in-delay-2">
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <blockquote>No salesman at my door. No pressure. Just a detailed quote in my inbox. This is how every home service should work.</blockquote>
+                    <div class="testimonial-author-card">
+                        <div class="avatar">S</div>
+                        <div>
+                            <div class="name">Sarah K.</div>
+                            <div class="location">Sugar Land, TX</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in fade-in-delay-3">
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <blockquote>I got three quotes. Two were mystery numbers with no breakdown. Simple Roofing showed me every line item. They earned my business on transparency alone.</blockquote>
+                    <div class="testimonial-author-card">
+                        <div class="avatar">J</div>
+                        <div>
+                            <div class="name">James R.</div>
+                            <div class="location">Houston, TX</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">The Difference</div>
+                <h2>Traditional Roofing vs. Simple Roofing</h2>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-column traditional fade-in">
+                    <h3>
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        Traditional Roofing
+                    </h3>
+                    <ul class="comparison-list">
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            Lump-sum mystery price
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            Hidden markups on materials
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            High-pressure sales tactics
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            No real cost breakdown
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            Confusing contracts
+                        </li>
+                    </ul>
+                </div>
+                <div class="comparison-column simple fade-in">
+                    <h3>
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Simple Roofing
+                    </h3>
+                    <ul class="comparison-list">
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            Real material costs shown
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            Actual labor costs listed
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            Flat, honest profit margin
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            No sales games or pressure
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            Full transparency, always
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p class="comparison-tagline fade-in">Same roof. Completely different experience.</p>
+        </div>
+    </section>
+
+    <!-- Service Area Section -->
+    <section class="area" id="areas">
+        <div class="container">
+            <div class="area-grid">
+                <div class="area-content fade-in">
+                    <div class="section-label">Service Area</div>
+                    <h2>Serving Houston and Surrounding Areas</h2>
+                    <p>We serve homeowners across Houston, Katy, Cypress, Sugar Land, Pearland, The Woodlands, Spring, and surrounding areas. If you're in or near Houston, there's a good chance we can help — with honest pricing, fast quotes, and no sales pressure.</p>
+                    <ul class="area-list">
+                        <li>Houston</li>
+                        <li>Katy</li>
+                        <li>Sugar Land</li>
+                        <li>The Woodlands</li>
+                        <li>Pearland</li>
+                        <li>League City</li>
+                        <li>Cypress</li>
+                        <li>Spring</li>
+                        <li>Missouri City</li>
+                        <li>Pasadena</li>
+                    </ul>
+                </div>
+                <div class="area-visual fade-in">
+                    <div class="area-map">
+                        <div id="service-map" class="area-map-container"></div>
+                        <div class="area-map-overlay">
+                            <h3>Greater Houston Area</h3>
+                            <p>Proudly serving Houston and surrounding communities</p>
+                            <div class="area-radius">
+                                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                50 Mile Radius
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq section" id="faq">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">FAQ</div>
+                <h2>Common Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <span>Q:</span> Do you really show all costs?
+                    </div>
+                    <p class="faq-answer">Yes. You'll see material invoices, labor costs, and our flat profit — nothing hidden. We believe you deserve to know exactly where your money goes.</p>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <span>Q:</span> Do you need to come out to give a quote?
+                    </div>
+                    <p class="faq-answer">Most quotes are done remotely using satellite measurements and our proprietary estimating system. If we need to visit for a complex roof, we'll tell you upfront.</p>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <span>Q:</span> Are you licensed and insured?
+                    </div>
+                    <p class="faq-answer">Yes. We're fully licensed and insured in the state of Texas. We're happy to provide documentation upon request.</p>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <span>Q:</span> What if I don't like the price?
+                    </div>
+                    <p class="faq-answer">No problem. There's no pressure and no obligation. Our quotes are free, and we never use high-pressure sales tactics. If we're not the right fit, no hard feelings.</p>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <span>Q:</span> How fast do I get a quote?
+                    </div>
+                    <p class="faq-answer">Usually within 24 hours. We'll send you a detailed breakdown via email with everything itemized — materials, labor, and our service fee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready for Transparent Pricing?</h2>
+            <p>Get your free, no-obligation quote in 24 hours. See exactly what you'll pay — no surprises, no salesmen.</p>
+            <a href="#quote" class="btn btn-large">Get Your Free Quote</a>
+            <div class="cta-phone">Or call us: <a href="tel:+17135551234">(713) 555-1234</a></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <svg class="logo" viewBox="0 0 442.75 201.32" xmlns="http://www.w3.org/2000/svg" style="height: 50px; width: auto;">
+                        <style>.st0{fill:#fff}.st1{fill:#EF1D28}</style>
+                        <g>
+                            <rect y="110.02" class="st0" width="14.81" height="0.22"/>
+                            <path class="st0" d="M442.75,0v201.32H0v-76.27h14.81v61.46h413.13V14.81H14.81v80.4H74.7c2.32,0,4.3-0.72,5.94-2.15c1.65-1.43,2.47-3.2,2.47-5.31v-0.9c0-2.04-0.82-3.79-2.47-5.26c-1.64-1.47-3.62-2.2-5.94-2.2H56.86c-3.37,0-6.53-0.58-9.48-1.73c-2.96-1.16-5.54-2.75-7.74-4.76c-2.21-2.01-3.95-4.37-5.22-7.05c-1.27-2.69-1.9-5.56-1.9-8.62c0-3.05,0.63-5.93,1.9-8.61c1.27-2.69,3.01-5.04,5.22-7.05c2.2-2.02,4.78-3.6,7.74-4.76c2.95-1.16,6.11-1.73,9.48-1.73h73.37v74.94H114.3V49.88H56.86c-2.32,0-4.3,0.72-5.95,2.14c-1.64,1.42-2.46,3.14-2.46,5.16s0.82,3.75,2.46,5.21c1.65,1.46,3.63,2.19,5.95,2.19H74.7c3.36,0,6.52,0.58,9.48,1.74c2.95,1.16,5.53,2.75,7.74,4.77c2.2,2.02,3.94,4.37,5.22,7.07c1.27,2.69,1.9,5.57,1.9,8.63v0.9c0,3.07-0.63,5.97-1.9,8.7c-1.28,2.73-3.02,5.1-5.22,7.12c-2.21,2.02-4.79,3.61-7.74,4.77c-2.96,1.16-6.12,1.74-9.48,1.74H0V0H442.75z"/>
+                            <path class="st0" d="M216.28,35.19v74.83h-15.93V68.51l-18.74,36.69l-20.19-38.03v42.86h-15.93V35.19h17.05l18.74,35.34l18.06-35.34H216.28z"/>
+                            <path class="st0" d="M273.77,37.32c3.33,1.42,6.23,3.33,8.69,5.72c2.47,2.39,4.43,5.2,5.89,8.41c1.46,3.22,2.19,6.66,2.19,10.32c0,3.67-0.73,7.11-2.19,10.32c-1.46,3.22-3.42,6.04-5.89,8.47c-2.47,2.43-5.37,4.34-8.69,5.72c-3.33,1.39-6.9,2.08-10.71,2.08h-15.59v21.76h-15.93V72.99h15.93h15.59c1.57,0,3.05-0.3,4.43-0.9c1.38-0.6,2.62-1.4,3.7-2.41c1.08-1.01,1.92-2.19,2.52-3.53c0.6-1.35,0.9-2.8,0.9-4.38c0-1.49-0.3-2.92-0.9-4.26c-0.6-1.35-1.44-2.52-2.52-3.53c-1.09-1.01-2.32-1.81-3.7-2.41c-1.39-0.6-2.86-0.9-4.43-0.9h-15.59v16.04h-15.93V35.19h31.52C266.87,35.19,270.44,35.9,273.77,37.32z"/>
+                            <path class="st0" d="M305.8,35.19v52.39h15.93V35.19H305.8z"/>
+                            <polygon class="st0" points="410.23,95.32 410.23,110.13 359.64,110.13 359.64,110.02 305.8,110.02 305.8,95.32"/>
+                            <path class="st0" d="M410.23,50.22V35.41h-50.59v53.96h15.93v-7.74h34.66V66.82h-34.66v-16.6H410.23z"/>
+                            <path class="st1" d="M65.97,138.5c0,3.01-0.81,5.71-2.42,8.11c-1.61,2.4-3.73,4.21-6.36,5.44l7.95,13.8H54.77l-7.06-12.27h-6.17v12.34h-9.03v-21.05h9.03h8.84c0.89,0,1.73-0.17,2.51-0.51c0.78-0.34,1.48-0.8,2.1-1.37c0.61-0.57,1.09-1.24,1.43-2c0.34-0.76,0.51-1.59,0.51-2.48c0-0.85-0.17-1.65-0.51-2.42c-0.34-0.76-0.82-1.43-1.43-2c-0.61-0.57-1.31-1.03-2.1-1.37c-0.78-0.34-1.62-0.51-2.51-0.51h-8.84v9.09h-9.03v-17.87h17.87c2.16,0,4.19,0.4,6.07,1.21c1.89,0.81,3.53,1.89,4.93,3.24c1.4,1.36,2.51,2.95,3.34,4.77C65.55,134.47,65.97,136.42,65.97,138.5z"/>
+                            <path class="st1" d="M106.8,127.88c1.91,1.78,3.34,3.81,4.32,6.07c0.97,2.27,1.46,4.65,1.46,7.15v7.31c0,2.54-0.49,4.95-1.46,7.22c-0.97,2.27-2.41,4.29-4.32,6.07c-1.86,1.78-3.98,3.14-6.35,4.07s-4.87,1.4-7.49,1.4c-2.67,0-5.18-0.47-7.52-1.4c-2.35-0.93-4.48-2.29-6.38-4.07c-1.86-1.78-3.28-3.8-4.26-6.07c-0.97-2.27-1.46-4.67-1.46-7.22v-7.31c0-2.5,0.49-4.89,1.46-7.15c0.97-2.27,2.39-4.29,4.26-6.07c1.9-1.78,4.03-3.14,6.38-4.07c2.35-0.93,4.86-1.4,7.52-1.4c2.62,0,5.12,0.47,7.49,1.4C102.82,124.74,104.94,126.1,106.8,127.88z M103.55,141.11c0-1.4-0.28-2.7-0.83-3.91c-0.55-1.21-1.3-2.27-2.26-3.18c-0.95-0.91-2.08-1.63-3.37-2.16c-1.29-0.53-2.66-0.79-4.1-0.79c-1.48,0-2.86,0.27-4.13,0.79c-1.27,0.53-2.4,1.25-3.37,2.16c-0.98,0.91-1.74,1.97-2.29,3.18c-0.55,1.21-0.83,2.51-0.83,3.91v7.31c0,1.4,0.28,2.71,0.83,3.94c0.55,1.23,1.31,2.3,2.29,3.21c0.97,0.91,2.1,1.63,3.37,2.16c1.27,0.53,2.65,0.8,4.13,0.8c1.44,0,2.81-0.26,4.1-0.8c1.29-0.53,2.42-1.25,3.37-2.16c0.95-0.91,1.71-1.98,2.26-3.21c0.55-1.23,0.83-2.54,0.83-3.94V141.11z"/>
+                            <path class="st1" d="M154.69,127.88c1.91,1.78,3.34,3.81,4.32,6.07c0.97,2.27,1.46,4.65,1.46,7.15v7.31c0,2.54-0.49,4.95-1.46,7.22c-0.97,2.27-2.41,4.29-4.32,6.07c-1.86,1.78-3.98,3.14-6.35,4.07s-4.87,1.4-7.49,1.4c-2.67,0-5.18-0.47-7.52-1.4c-2.35-0.93-4.48-2.29-6.38-4.07c-1.86-1.78-3.28-3.8-4.25-6.07c-0.97-2.27-1.46-4.67-1.46-7.22v-7.31c0-2.5,0.49-4.89,1.46-7.15c0.97-2.27,2.39-4.29,4.25-6.07c1.9-1.78,4.03-3.14,6.38-4.07c2.35-0.93,4.86-1.4,7.52-1.4c2.62,0,5.12,0.47,7.49,1.4C150.71,124.74,152.83,126.1,154.69,127.88z M151.44,141.11c0-1.4-0.28-2.7-0.83-3.91c-0.55-1.21-1.3-2.27-2.26-3.18c-0.95-0.91-2.08-1.63-3.37-2.16c-1.29-0.53-2.66-0.79-4.1-0.79c-1.48,0-2.86,0.27-4.13,0.79c-1.27,0.53-2.4,1.25-3.37,2.16c-0.98,0.91-1.74,1.97-2.29,3.18c-0.55,1.21-0.83,2.51-0.83,3.91v7.31c0,1.4,0.28,2.71,0.83,3.94c0.55,1.23,1.31,2.3,2.29,3.21c0.97,0.91,2.1,1.63,3.37,2.16c1.27,0.53,2.65,0.8,4.13,0.8c1.44,0,2.81-0.26,4.1-0.8c1.29-0.53,2.42-1.25,3.37-2.16c0.95-0.91,1.71-1.98,2.26-3.21c0.55-1.23,0.83-2.54,0.83-3.94V141.11z"/>
+                            <polygon class="st1" points="210.96,123.43 210.96,131.82 178.15,131.82 178.15,137.86 169.12,137.86 169.12,123.43"/>
+                            <polygon class="st1" points="197.8,141.36 197.8,149.75 178.15,149.75 178.15,165.84 169.12,165.84 169.12,141.36"/>
+                            <path class="st1" d="M206.45,165.84v-42.42h9.03v42.42H206.45z"/>
+                            <path class="st1" d="M257.64,123.43v42.42h-9.51l-14.97-25.69v25.69h-9.03v-42.42h9.79l14.69,25.18v-25.18H257.64z"/>
+                            <path class="st1" d="M295.73,151.79h9.03v14.12h-15.62c-3.05,0-5.97-0.53-8.76-1.59c-2.79-1.06-5.27-2.59-7.43-4.58c-2.16-2.04-3.81-4.33-4.95-6.9c-1.14-2.56-1.71-5.27-1.71-8.11c0-2.84,0.57-5.54,1.72-8.11c1.14-2.56,2.8-4.84,4.96-6.84c2.16-2.03,4.64-3.58,7.44-4.64c2.8-1.06,5.72-1.59,8.78-1.59h11.07v8.39h-11.07c-1.91,0-3.7,0.34-5.37,1.02c-1.68,0.68-3.15,1.59-4.42,2.73c-1.27,1.14-2.27,2.49-2.99,4.04c-0.72,1.55-1.08,3.21-1.08,4.99c0,1.78,0.36,3.44,1.08,4.99c0.72,1.55,1.72,2.89,2.99,4.04c1.27,1.14,2.74,2.06,4.42,2.73c1.67,0.68,3.47,1.02,5.37,1.02h6.55V151.79z M304.76,140.02v8.39h-19.27v-8.39H304.76z"/>
+                            <path class="st1" d="M349.44,132.97c-1.68,0.68-3.15,1.59-4.42,2.73c-1.27,1.14-2.27,2.49-2.99,4.04c-0.72,1.55-1.08,3.21-1.08,4.99c0,1.78,0.36,3.44,1.08,4.99c0.72,1.55,1.72,2.89,2.99,4.04c1.27,1.14,2.74,2.06,4.42,2.73c1.67,0.68,3.47,1.02,5.37,1.02h11.07v8.39h-11.07c-3.05,0-5.98-0.53-8.78-1.59c-2.8-1.06-5.28-2.59-7.44-4.58c-2.16-2.04-3.82-4.33-4.96-6.9c-1.14-2.56-1.72-5.27-1.72-8.11c0-2.84,0.57-5.54,1.72-8.11c1.14-2.56,2.8-4.84,4.96-6.84c2.16-2.03,4.64-3.58,7.44-4.64c2.8-1.06,5.72-1.59,8.78-1.59h11.07v8.39h-11.07C352.91,131.95,351.12,132.29,349.44,132.97z"/>
+                            <path class="st1" d="M404.46,127.88c1.91,1.78,3.34,3.81,4.32,6.07c0.97,2.27,1.46,4.65,1.46,7.15v7.31c0,2.54-0.49,4.95-1.46,7.22c-0.97,2.27-2.41,4.29-4.32,6.07c-1.86,1.78-3.98,3.14-6.35,4.07s-4.87,1.4-7.49,1.4c-2.67,0-5.18-0.47-7.52-1.4c-2.35-0.93-4.48-2.29-6.38-4.07c-1.86-1.78-3.28-3.8-4.26-6.07c-0.97-2.27-1.46-4.67-1.46-7.22v-7.31c0-2.5,0.49-4.89,1.46-7.15c0.97-2.27,2.39-4.29,4.26-6.07c1.9-1.78,4.03-3.14,6.38-4.07c2.35-0.93,4.86-1.4,7.52-1.4c2.62,0,5.12,0.47,7.49,1.4C400.48,124.74,402.59,126.1,404.46,127.88z M401.2,141.11c0-1.4-0.28-2.7-0.83-3.91c-0.55-1.21-1.3-2.27-2.26-3.18c-0.95-0.91-2.08-1.63-3.37-2.16c-1.29-0.53-2.66-0.79-4.1-0.79c-1.48,0-2.86,0.27-4.13,0.79c-1.27,0.53-2.4,1.25-3.37,2.16c-0.98,0.91-1.74,1.97-2.29,3.18c-0.55,1.21-0.83,2.51-0.83,3.91v7.31c0,1.4,0.28,2.71,0.83,3.94c0.55,1.23,1.31,2.3,2.29,3.21c0.97,0.91,2.1,1.63,3.37,2.16c1.27,0.53,2.65,0.8,4.13,0.8c1.44,0,2.81-0.26,4.1-0.8c1.29-0.53,2.42-1.25,3.37-2.16c0.95-0.91,1.71-1.98,2.26-3.21c0.55-1.23,0.83-2.54,0.83-3.94V141.11z"/>
+                        </g>
+                    </svg>
+                    <p>Houston's only Cost Plus roofer. We believe you deserve to know exactly what you're paying for.</p>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title">Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services">Roof Replacement</a></li>
+                        <li><a href="#services">Roof Repair</a></li>
+                        <li><a href="#services">Storm Damage</a></li>
+                        <li><a href="#services">Inspections</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#pricing">Cost Plus Pricing</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#areas">Service Areas</a></li>
+                        <li><a href="#quote">Get a Quote</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4 class="footer-title">Contact</h4>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <a href="tel:+17135551234">(713) 555-1234</a>
+                    </p>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <a href="mailto:hello@simpleroofingco.com">hello@simpleroofingco.com</a>
+                    </p>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Houston, TX
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Simple Roofing Co. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Licenses</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Scroll animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Animated Counter for Stats
+        const statCounters = document.querySelectorAll('.stat-counter');
+        let countersAnimated = false;
+
+        const animateCounters = () => {
+            if (countersAnimated) return;
+            
+            statCounters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                updateCounter();
+            });
+            
+            countersAnimated = true;
+        };
+
+        // Trigger counter animation when stats section is in view
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            statsObserver.observe(statsSection);
+        }
+
+        // Form submission
+        const quoteForm = document.getElementById('quoteForm');
+        
+        quoteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(quoteForm);
+            const data = Object.fromEntries(formData);
+            
+            // Here you would normally send to your backend/CRM
+            console.log('Form submitted:', data);
+            
+            // Show success message
+            alert('Thanks! We\'ll send your quote within 24 hours.');
+            quoteForm.reset();
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Phone number formatting
+        const phoneInput = document.getElementById('phone');
+        
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = `(${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6,10)}`;
+            } else if (value.length >= 3) {
+                value = `(${value.slice(0,3)}) ${value.slice(3)}`;
+            }
+            e.target.value = value;
+        });
+    </script>
+    
+    <!-- Leaflet Map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize map centered on Houston
+            const map = L.map('service-map', {
+                center: [29.7604, -95.3698],
+                zoom: 9,
+                zoomControl: true,
+                scrollWheelZoom: true,
+                dragging: true,
+                touchZoom: true,
+                doubleClickZoom: true
+            });
+
+            // Add tile layer with a clean, light style
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Custom red marker icon
+            const redIcon = L.divIcon({
+                className: 'custom-marker',
+                iconSize: [14, 14],
+                iconAnchor: [7, 7],
+                popupAnchor: [0, -10]
+            });
+
+            // Houston marker (larger, main location)
+            const houstonIcon = L.divIcon({
+                className: 'custom-marker',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+                popupAnchor: [0, -12]
+            });
+
+            // Service area locations with coordinates
+            const locations = [
+                { name: 'Houston', lat: 29.7604, lng: -95.3698, main: true },
+                { name: 'Sugar Land', lat: 29.6196, lng: -95.6349 },
+                { name: 'Pearland', lat: 29.5636, lng: -95.2860 },
+                { name: 'Cypress', lat: 29.9691, lng: -95.6969 },
+                { name: 'Missouri City', lat: 29.6186, lng: -95.5377 },
+                { name: 'Katy', lat: 29.7858, lng: -95.8245 },
+                { name: 'The Woodlands', lat: 30.1658, lng: -95.4613 },
+                { name: 'League City', lat: 29.5075, lng: -95.0949 },
+                { name: 'Spring', lat: 30.0799, lng: -95.4172 },
+                { name: 'Pasadena', lat: 29.6911, lng: -95.2091 }
+            ];
+
+            // Add markers to map
+            locations.forEach(loc => {
+                const marker = L.marker([loc.lat, loc.lng], { 
+                    icon: loc.main ? houstonIcon : redIcon 
+                }).addTo(map);
+                
+                marker.bindPopup('<strong>' + loc.name + '</strong><br>Service Area');
+            });
+
+            // Draw a circle to show 50-mile radius (approximately 80km)
+            L.circle([29.7604, -95.3698], {
+                color: '#EF1D28',
+                fillColor: '#EF1D28',
+                fillOpacity: 0.05,
+                weight: 2,
+                opacity: 0.3,
+                radius: 80467
+            }).addTo(map);
+
+            // Force map to recalculate size
+            setTimeout(function() {
+                map.invalidateSize();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
