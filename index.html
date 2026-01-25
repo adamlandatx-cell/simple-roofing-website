@@ -15,6 +15,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23EF1D28' width='100' height='100' rx='8'/%3E%3Ctext x='50' y='68' font-size='50' font-family='Arial Black' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
     
+    <!-- Supabase SDK for form submission to CRM -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         /* ============================================
            CSS CUSTOM PROPERTIES - LIGHT MODE
@@ -1834,7 +1837,7 @@
         }
 
         .fit-list li::before {
-            content: '✓';
+            content: 'âœ“';
             color: var(--red);
             font-weight: 700;
             font-size: 1.25rem;
@@ -2371,7 +2374,7 @@
                 </div>
                 <div class="price-breakdown-wrapper">
                     <div class="price-breakdown fade-in">
-                        <div class="breakdown-title">Roof Replacement — 2,400 SQ FT</div>
+                        <div class="breakdown-title">Roof Replacement â€” 2,400 SQ FT</div>
                         <div class="breakdown-item">
                             <div class="breakdown-label">
                                 <div class="icon">
@@ -2471,7 +2474,7 @@
                 <div class="process-step fade-in fade-in-delay-1">
                     <div class="step-number">1</div>
                     <h3>Submit Your Address</h3>
-                    <p>Fill out our quick form. We use satellite imagery and AI to measure your roof remotely — no ladder required.</p>
+                    <p>Fill out our quick form. We use satellite imagery and AI to measure your roof remotely â€” no ladder required.</p>
                     <span class="process-badge">Takes 2 min</span>
                 </div>
                 <div class="process-step fade-in fade-in-delay-2">
@@ -2525,7 +2528,7 @@
                     </div>
                     <div class="service-content">
                         <h3>Roof Repair</h3>
-                        <p>Leaks, missing shingles, flashing issues — we fix it fast. Same transparent pricing for repairs.</p>
+                        <p>Leaks, missing shingles, flashing issues â€” we fix it fast. Same transparent pricing for repairs.</p>
                     </div>
                 </div>
                 <div class="card service-card fade-in fade-in-delay-3">
@@ -2569,7 +2572,7 @@
                             <span class="after">After</span>
                         </div>
                     </div>
-                    <div class="gallery-caption">Full Replacement – Houston, TX</div>
+                    <div class="gallery-caption">Full Replacement â€“ Houston, TX</div>
                 </div>
                 <div class="gallery-item fade-in fade-in-delay-2">
                     <div class="gallery-image-wrapper">
@@ -2579,7 +2582,7 @@
                             <span class="after">After</span>
                         </div>
                     </div>
-                    <div class="gallery-caption">Complete Reroof – Sugar Land, TX</div>
+                    <div class="gallery-caption">Complete Reroof â€“ Sugar Land, TX</div>
                 </div>
                 <div class="gallery-item fade-in fade-in-delay-3">
                     <div class="gallery-image-wrapper">
@@ -2589,7 +2592,7 @@
                             <span class="after">After</span>
                         </div>
                     </div>
-                    <div class="gallery-caption">Storm Damage Repair – Katy, TX</div>
+                    <div class="gallery-caption">Storm Damage Repair â€“ Katy, TX</div>
                 </div>
                 <div class="gallery-item fade-in fade-in-delay-4">
                     <div class="gallery-image-wrapper">
@@ -2599,7 +2602,7 @@
                             <span class="after">After</span>
                         </div>
                     </div>
-                    <div class="gallery-caption">Shingle Replacement – Pearland, TX</div>
+                    <div class="gallery-caption">Shingle Replacement â€“ Pearland, TX</div>
                 </div>
                 <div class="gallery-item fade-in fade-in-delay-5">
                     <div class="gallery-image-wrapper">
@@ -2609,7 +2612,7 @@
                             <span class="after">After</span>
                         </div>
                     </div>
-                    <div class="gallery-caption">Full Replacement – Cypress, TX</div>
+                    <div class="gallery-caption">Full Replacement â€“ Cypress, TX</div>
                 </div>
                 <div class="gallery-item fade-in fade-in-delay-6">
                     <div class="gallery-image-wrapper">
@@ -2619,7 +2622,7 @@
                             <span class="after">After</span>
                         </div>
                     </div>
-                    <div class="gallery-caption">Shingle Upgrade – The Woodlands, TX</div>
+                    <div class="gallery-caption">Shingle Upgrade â€“ The Woodlands, TX</div>
                 </div>
             </div>
         </div>
@@ -2828,7 +2831,7 @@
                 <div class="area-content fade-in">
                     <div class="section-label">Service Area</div>
                     <h2>Serving Houston and Surrounding Areas</h2>
-                    <p>We serve homeowners across Houston, Katy, Cypress, Sugar Land, Pearland, The Woodlands, Spring, and surrounding areas. If you're in or near Houston, there's a good chance we can help — with honest pricing, fast quotes, and no sales pressure.</p>
+                    <p>We serve homeowners across Houston, Katy, Cypress, Sugar Land, Pearland, The Woodlands, Spring, and surrounding areas. If you're in or near Houston, there's a good chance we can help â€” with honest pricing, fast quotes, and no sales pressure.</p>
                     <ul class="area-list">
                         <li>Houston</li>
                         <li>Katy</li>
@@ -2874,7 +2877,7 @@
                     <div class="faq-question">
                         <span>Q:</span> Do you really show all costs?
                     </div>
-                    <p class="faq-answer">Yes. You'll see material invoices, labor costs, and our flat profit — nothing hidden. We believe you deserve to know exactly where your money goes.</p>
+                    <p class="faq-answer">Yes. You'll see material invoices, labor costs, and our flat profit â€” nothing hidden. We believe you deserve to know exactly where your money goes.</p>
                 </div>
                 <div class="faq-item fade-in">
                     <div class="faq-question">
@@ -2898,7 +2901,7 @@
                     <div class="faq-question">
                         <span>Q:</span> How fast do I get a quote?
                     </div>
-                    <p class="faq-answer">Usually within 24 hours. We'll send you a detailed breakdown via email with everything itemized — materials, labor, and our service fee.</p>
+                    <p class="faq-answer">Usually within 24 hours. We'll send you a detailed breakdown via email with everything itemized â€” materials, labor, and our service fee.</p>
                 </div>
             </div>
         </div>
@@ -2908,7 +2911,7 @@
     <section class="cta">
         <div class="container">
             <h2>Ready for Transparent Pricing?</h2>
-            <p>Get your free, no-obligation quote in 24 hours. See exactly what you'll pay — no surprises, no salesmen.</p>
+            <p>Get your free, no-obligation quote in 24 hours. See exactly what you'll pay â€” no surprises, no salesmen.</p>
             <a href="#quote" class="btn btn-large">Get Your Free Quote</a>
             <div class="cta-phone">Or call us: <a href="tel:+17135551234">(713) 555-1234</a></div>
         </div>
@@ -2978,11 +2981,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 Simple Roofing Co. All rights reserved.</p>
+                <p>Â© 2025 Simple Roofing Co. All rights reserved.</p>
                 <div class="footer-legal">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
                     <a href="#">Licenses</a>
+                    <a href="https://portal.simpleroofer.com/crm">Admin Login</a>
                 </div>
             </div>
         </div>
@@ -3091,22 +3095,72 @@
             statsObserver.observe(statsSection);
         }
 
-        // Form submission
+        // Supabase configuration
+        const SUPABASE_URL = 'https://ncmdduoonqzwiqlcdndk.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jbWRkdW9vbnF6d2lxbGNkbmRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgwOTI2NjEsImV4cCI6MjA4MzY2ODY2MX0.5TpDspCRzuqmXLOMVf81LdkXWXHDBRGSypkymRK72mk';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Form submission - creates lead in CRM
         const quoteForm = document.getElementById('quoteForm');
+        const formBtn = quoteForm.querySelector('button[type="submit"]');
+        const originalBtnText = formBtn.textContent;
         
-        quoteForm.addEventListener('submit', (e) => {
+        quoteForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Update button state
+            formBtn.disabled = true;
+            formBtn.textContent = 'Submitting...';
             
             // Get form data
             const formData = new FormData(quoteForm);
             const data = Object.fromEntries(formData);
             
-            // Here you would normally send to your backend/CRM
-            console.log('Form submitted:', data);
+            // Map form fields to CRM lead structure
+            const lead = {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                address: data.address,
+                service_type: data.service,
+                source: 'website',
+                status: 'new',
+                notes: 'Submitted via marketing website quote form'
+            };
             
-            // Show success message
-            alert('Thanks! We\'ll send your quote within 24 hours.');
-            quoteForm.reset();
+            try {
+                const { data: newLead, error } = await supabase
+                    .from('leads')
+                    .insert(lead)
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                // Success - show message and reset form
+                formBtn.textContent = 'Quote Requested!';
+                formBtn.style.background = '#22c55e';
+                quoteForm.reset();
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    formBtn.disabled = false;
+                    formBtn.textContent = originalBtnText;
+                    formBtn.style.background = '';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Error submitting lead:', error);
+                formBtn.textContent = 'Error - Try Again';
+                formBtn.style.background = '#ef4444';
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    formBtn.disabled = false;
+                    formBtn.textContent = originalBtnText;
+                    formBtn.style.background = '';
+                }, 3000);
+            }
         });
 
         // Smooth scroll for anchor links
