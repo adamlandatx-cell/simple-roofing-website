@@ -1,0 +1,29 @@
+# Simple Roofing Co - robots.txt
+# https://simpleroofer.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://simpleroofer.com/sitemap.xml
+
+# Block admin/utility paths if any exist
+Disallow: /admin/
+Disallow: /private/
+
+# Allow all search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI crawlers - allowed (we have llms.txt for them)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
